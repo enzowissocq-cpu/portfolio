@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Enzo Wissocq — Portfolio BUT GEA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg:     #F7F5F0;
+      --ink:    #1A1814;
+      --accent: #2B4D6F;
+      --light:  #E8E3DA;
+      --muted:  #7A7570;
+      --white:  #FFFFFF;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.2rem 4rem;
+      background: rgba(247,245,240,0.93);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--light);
+    }
+    .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 600; color: var(--ink); text-decoration: none; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--ink); }
+
+    /* HERO */
+    #hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; padding-top: 5rem; }
+    .hero-left { display: flex; flex-direction: column; justify-content: center; padding: 6rem 4rem 6rem 5rem; animation: fadeUp 0.9s ease both; }
+    .hero-tag { font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; }
+    .hero-name { font-family: 'Cormorant Garamond', serif; font-size: clamp(3.5rem, 6vw, 6rem); font-weight: 300; line-height: 1.05; margin-bottom: 1.2rem; }
+    .hero-name span { font-weight: 600; display: block; }
+    .hero-subtitle { font-size: 1rem; color: var(--muted); max-width: 38ch; margin-bottom: 2.5rem; line-height: 1.8; }
+    .hero-cta { display: inline-flex; align-items: center; gap: 0.8rem; padding: 0.9rem 2rem; background: var(--accent); color: var(--white); text-decoration: none; font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase; transition: background 0.2s, transform 0.2s; width: fit-content; }
+    .hero-cta:hover { background: var(--ink); transform: translateY(-2px); }
+
+    .hero-right { background: var(--light); position: relative; overflow: hidden; animation: fadeIn 1.2s ease both 0.3s; }
+    .hero-photo { position: absolute; inset: 0; background-size: cover; background-position: center top; }
+    .hero-badge { position: absolute; bottom: 3rem; left: 3rem; background: var(--white); padding: 1.2rem 1.5rem; border-left: 3px solid var(--accent); animation: fadeUp 1s ease both 0.6s; z-index: 2; }
+    .hero-badge p { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+    .hero-badge strong { display: block; font-size: 0.95rem; font-weight: 500; margin-top: 0.2rem; }
+
+    /* SECTIONS */
+    section { padding: 6rem 5rem; }
+    .section-label { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+    .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 300; line-height: 1.15; margin-bottom: 3rem; }
+    .section-title strong { font-weight: 600; }
+    .divider { height: 1px; background: var(--light); margin: 0 5rem; }
+
+    /* BIO */
+    #bio { background: var(--white); }
+    .bio-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 5rem; align-items: start; }
+    .bio-details { display: flex; flex-direction: column; gap: 0.8rem; margin-top: 2rem; }
+    .bio-detail { display: flex; justify-content: space-between; padding: 0.7rem 0; border-bottom: 1px solid var(--light); font-size: 0.85rem; }
+    .bio-detail span:first-child { color: var(--muted); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; }
+    .bio-detail span:last-child { font-weight: 500; text-align: right; }
+    .bio-info p { color: var(--muted); line-height: 1.9; font-size: 0.95rem; margin-bottom: 1.2rem; }
+
+    /* COMPÉTENCES */
+    #competences { background: var(--bg); }
+    .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .skill-card { background: var(--white); padding: 2rem; border-top: 2px solid var(--light); transition: border-color 0.2s, transform 0.2s; }
+    .skill-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+    .skill-icon { font-size: 1.5rem; margin-bottom: 1rem; }
+    .skill-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600; margin-bottom: 0.6rem; }
+    .skill-card p { font-size: 0.82rem; color: var(--muted); line-height: 1.7; }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem; }
+    .tag { font-size: 0.7rem; letter-spacing: 0.06em; padding: 0.25rem 0.7rem; background: var(--light); color: var(--muted); text-transform: uppercase; }
+
+    /* PROJETS */
+    #projets { background: var(--white); }
+    .projects-list { display: flex; flex-direction: column; gap: 1px; background: var(--light); }
+    .project-item { background: var(--white); display: grid; grid-template-columns: 3rem 1fr auto auto; align-items: center; gap: 2rem; padding: 2rem 2.5rem; transition: background 0.2s; cursor: pointer; }
+    .project-item:hover { background: var(--bg); }
+    .project-num { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 300; color: var(--light); }
+    .project-info h3 { font-size: 1rem; font-weight: 500; margin-bottom: 0.3rem; }
+    .project-info p { font-size: 0.82rem; color: var(--muted); }
+    .project-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .project-arrow { color: var(--light); font-size: 1.1rem; transition: color 0.2s, transform 0.2s; }
+    .project-item:hover .project-arrow { color: var(--accent); transform: translateX(4px); }
+
+    /* CV */
+    #cv { background: var(--ink); color: var(--white); display: flex; align-items: center; justify-content: space-between; padding: 5rem; gap: 3rem; }
+    #cv .section-label { color: rgba(255,255,255,0.4); }
+    #cv .section-title { color: var(--white); margin-bottom: 1rem; }
+    #cv p { color: rgba(255,255,255,0.55); font-size: 0.9rem; max-width: 45ch; line-height: 1.8; }
+    .cv-btn { display: inline-flex; align-items: center; gap: 0.8rem; padding: 1rem 2.5rem; border: 1px solid rgba(255,255,255,0.25); color: var(--white); text-decoration: none; font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; flex-shrink: 0; transition: background 0.2s, border-color 0.2s; }
+    .cv-btn:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.5); }
+
+    /* FOOTER */
+    footer { background: var(--bg); padding: 2.5rem 5rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--light); }
+    footer p { font-size: 0.78rem; color: var(--muted); }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-size: 0.78rem; color: var(--muted); text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--ink); }
+
+    /* MODAL */
+    .modal-overlay { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(26,24,20,0.6); backdrop-filter: blur(4px); align-items: center; justify-content: center; padding: 2rem; }
+    .modal-overlay.open { display: flex; }
+    .modal { background: var(--white); max-width: 640px; width: 100%; max-height: 88vh; overflow-y: auto; position: relative; animation: modalIn 0.22s ease; }
+    @keyframes modalIn { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+    .modal-header { padding: 2.5rem 2.5rem 1.5rem; border-bottom: 1px solid var(--light); position: sticky; top: 0; background: var(--white); z-index: 1; }
+    .modal-num { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.4rem; }
+    .modal-title { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 600; line-height: 1.2; margin-bottom: 1rem; }
+    .modal-close { position: absolute; top: 1.4rem; right: 1.4rem; background: none; border: none; cursor: pointer; color: var(--muted); font-size: 1.2rem; line-height: 1; padding: 0.4rem; transition: color 0.2s; }
+    .modal-close:hover { color: var(--ink); }
+    .modal-body { padding: 2rem 2.5rem 2.5rem; display: flex; flex-direction: column; gap: 2rem; }
+    .modal-section-label { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.7rem; }
+    .modal-section p { font-size: 0.9rem; color: var(--muted); line-height: 1.85; }
+    .modal-section ul { padding-left: 1.2rem; color: var(--muted); font-size: 0.9rem; line-height: 1.85; }
+    .modal-meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; padding: 1rem 1.2rem; background: var(--bg); border-left: 3px solid var(--accent); }
+    .modal-meta-item { display: flex; flex-direction: column; gap: 0.2rem; }
+    .meta-label { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+    .meta-value { font-size: 0.85rem; font-weight: 500; }
+    .modal-results { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .result-card { background: var(--bg); padding: 1rem 1.2rem; border-top: 2px solid var(--accent); }
+    .result-card strong { display: block; font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 600; color: var(--accent); line-height: 1; margin-bottom: 0.3rem; }
+    .result-card span { font-size: 0.75rem; color: var(--muted); }
+    .modal-skills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .skill-pill { font-size: 0.73rem; padding: 0.3rem 0.8rem; border: 1px solid var(--light); color: var(--muted); background: var(--bg); }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.2rem; }
+      #hero { grid-template-columns: 1fr; }
+      .hero-left { padding: 8rem 2rem 4rem; }
+      .hero-right { min-height: 320px; }
+      section { padding: 4rem 2rem; }
+      .divider { margin: 0 2rem; }
+      .bio-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .skills-grid { grid-template-columns: 1fr; }
+      #cv { flex-direction: column; padding: 4rem 2rem; }
+      footer { flex-direction: column; gap: 1rem; padding: 2rem; text-align: center; }
+      .project-item { grid-template-columns: 2.5rem 1fr auto; }
+      .project-tags { display: none; }
+      .modal-results { grid-template-columns: 1fr; }
+      .modal-meta { grid-template-columns: 1fr; gap: 0.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="#hero" class="nav-logo">Enzo Wissocq</a>
+  <ul class="nav-links">
+    <li><a href="#bio">À propos</a></li>
+    <li><a href="#competences">Compétences</a></li>
+    <li><a href="#projets">Projets</a></li>
+    <li><a href="#cv">CV &amp; Contact</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-left">
+    <p class="hero-tag">Portfolio — Gestion des Entreprises et des Administrations</p>
+    <h1 class="hero-name">Bonjour,<br>je suis <span>Enzo.</span></h1>
+    <p class="hero-subtitle">Étudiant en 3ème année de BUT GEA à l'IUT de Meaux. Spécialisé en contrôle de gestion et pilotage de la performance, je prépare mon intégration en Master CGAO pour l'année prochaine.</p>
+    <a href="#bio" class="hero-cta">
+      Découvrir mon profil
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+  <div class="hero-right">
+    <div class="hero-photo" id="hero-photo" style="background-image: url(photo_pro_enzo\ copie.jpg);"></div>
+    <div class="hero-badge">
+      <p>Statut actuel</p>
+      <strong>Candidat Master CGAO</strong>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="bio">
+  <div class="reveal">
+    <p class="section-label">À propos</p>
+    <h2 class="section-title">Mon <strong>parcours</strong></h2>
+  </div>
+  <div class="bio-grid reveal">
+    <div>
+      <div class="bio-details">
+        <div class="bio-detail"><span>Formation</span><span>BUT GEA (3ème année)</span></div>
+        <div class="bio-detail"><span>Établissement</span><span>Université Gustave Eiffel</span></div>
+        <div class="bio-detail"><span>Parcours ciblé</span><span>Master CGAO</span></div>
+        <div class="bio-detail"><span>Zones de force</span><span>Contrôle de gestion &amp; Flux</span></div>
+        <div class="bio-detail"><span>Disponibilité</span><span>Contrat d'apprentissage</span></div>
+      </div>
+    </div>
+    <div class="bio-info">
+      <p>Étudiant au sein du BUT Gestion des Entreprises et des Administrations (GEA) de l'Université Gustave Eiffel, j'ai acquis une solide formation généraliste en management, finance et organisation. Au cours de mon cursus, j'ai choisi d'orienter mon profil vers le contrôle de gestion et le pilotage de la performance, avec pour objectif d'intégrer un Master CGAO.</p>
+      <p>Mon parcours s'appuie sur des expériences de terrain concrètes. Au sein de l'association WIMOOV à Paris, j'ai pris en charge l'analyse de rentabilité d'une activité clé, consolidant mes compétences en contrôle de gestion. Actuellement à la FNAC, je participe à la dimension analytique de l'inventaire annuel — de la préparation opérationnelle en amont à l'analyse des écarts en aval — pour optimiser la gestion des stocks.</p>
+      <p>Rigoureux, méthodique et doté d'une forte appétence pour l'analyse des données financières, je maîtrise les outils bureautiques indispensables au pilotage d'une structure, notamment Excel. Ce portfolio a pour but de vous présenter mon parcours académique, mes compétences ainsi que les projets marquants qui jalonnent ma formation.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="competences">
+  <div class="reveal">
+    <p class="section-label">Savoir-faire</p>
+    <h2 class="section-title">Mes <strong>compétences</strong></h2>
+  </div>
+  <div class="skills-grid reveal">
+    <div class="skill-card">
+      <div class="skill-icon">📊</div>
+      <h3>Contrôle de gestion</h3>
+      <p>Analyse de rentabilité, calcul de coûts complets, méthode des centres d'analyse et imputation rationnelle.</p>
+      <div class="skill-tags"><span class="tag">Coûts complets</span><span class="tag">Rentabilité</span><span class="tag">Analytique</span></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">📦</div>
+      <h3>Pilotage des flux</h3>
+      <p>Gestion opérationnelle et analytique des stocks, préparation d'inventaires physiques et audit des écarts.</p>
+      <div class="skill-tags"><span class="tag">Stocks</span><span class="tag">Inventaire</span><span class="tag">FNAC</span></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">💻</div>
+      <h3>Modélisation &amp; Data</h3>
+      <p>Automatisation de matrices de gestion et création de tableaux de bord d'aide à la décision sur tableur.</p>
+      <div class="skill-tags"><span class="tag">Excel avancé</span><span class="tag">Formules complexes</span><span class="tag">Reporting</span></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🏢</div>
+      <h3>Management de projet</h3>
+      <p>Coordination d'équipes importantes, planification logistique et gestion des relations parties prenantes.</p>
+      <div class="skill-tags"><span class="tag">Rétroplanning</span><span class="tag">Coordination</span><span class="tag">Ressources</span></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">📝</div>
+      <h3>Analyse Stratégique</h3>
+      <p>Rédaction de diagnostics stratégiques, audits organisationnels et recommandations managériales.</p>
+      <div class="skill-tags"><span class="tag">SWOT</span><span class="tag">PESTEL</span><span class="tag">Livrables</span></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🌍</div>
+      <h3>Aisance Professionnelle</h3>
+      <p>Restitution de synthèses financières devant des jurys et dirigeants d'entreprises, maîtrise de l'anglais des affaires.</p>
+      <div class="skill-tags"><span class="tag">Soutenance</span><span class="tag">Posture</span><span class="tag">Anglais</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="projets">
+  <div class="reveal">
+    <p class="section-label">Réalisations</p>
+    <h2 class="section-title">Mes <strong>projets clés</strong></h2>
+  </div>
+  <div class="projects-list reveal">
+    <div class="project-item" onclick="openModal('p1')">
+      <span class="project-num">01</span>
+      <div class="project-info">
+        <h3>Étude de rentabilité — WIMOOV</h3>
+        <p>Restructuration analytique et modélisation des coûts d'une flotte de véhicules (Stage S4)</p>
+      </div>
+      <div class="project-tags"><span class="tag">Contrôle de Gestion</span><span class="tag">Excel</span></div>
+      <span class="project-arrow">&#8594;</span>
+    </div>
+    <div class="project-item" onclick="openModal('p2')">
+      <span class="project-num">02</span>
+      <div class="project-info">
+        <h3>Management de projet — Oralité et Improvisation</h3>
+        <p>Coordination des ressources et communication interne d'une équipe de 8 personnes (Projet Tuteuré)</p>
+      </div>
+      <div class="project-tags"><span class="tag">Gestion de Projet</span><span class="tag">SAÉ</span></div>
+      <span class="project-arrow">&#8594;</span>
+    </div>
+    <div class="project-item" onclick="openModal('p3')">
+      <span class="project-num">03</span>
+      <div class="project-info">
+        <h3>Diagnostic &amp; Outil de pilotage — FRAULIS</h3>
+        <p>Audit managérial stratégique et conception technique d'une matrice d'aide à la décision (SAÉ S5/S6)</p>
+      </div>
+      <div class="project-tags"><span class="tag">Conseil</span><span class="tag">Outil Excel</span></div>
+      <span class="project-arrow">&#8594;</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="avenir" style="background: var(--white);">
+  <div class="reveal">
+    <p class="section-label">Projet professionnel</p>
+    <h2 class="section-title">Mon projet <strong>d'avenir</strong></h2>
+    <div style="max-width: 75ch; color: var(--muted); font-size: 0.95rem; line-height: 1.9; display: flex; flex-direction: column; gap: 1.2rem;">
+      <p>L’obtention du BUT Gestion des Entreprises et des Administrations (GEA) constitue pour moi une première étape majeure qui m'a permis d'acquérir les fondamentaux de la gestion, du management et de la finance d'entreprise. Soucieux de poursuivre mon parcours universitaire dans cette dynamique, mon objectif à court terme est d'intégrer un <strong>Master Contrôle de Gestion et Audit Organisationnel (CGAO)</strong>.</p>
+      <p>Cette orientation se présente comme la suite logique de ma formation. Elle répond à ma volonté d'approfondir mes compétences techniques en matière de pilotage de la performance, de comptabilité de gestion et d'audit interne, tout en développant une vision stratégique et managériale de haut niveau.</p>
+      <p>À moyen terme, mon ambition est de mettre cette expertise au service des organisations en occupant des fonctions de contrôleur de gestion ou d'auditeur, afin de participer activement à l'optimisation des processus opérationnels et à l'aide à la décision stratégique.</p>
+    </div>
+  </div>
+</section>
+
+<section id="cv">
+  <div class="reveal">
+    <p class="section-label">Curriculum vitae &amp; Contact</p>
+    <h2 class="section-title" style="margin-bottom:0.8rem;">Restons en<br><strong>contact</strong></h2>
+    <p>Retrouvez l'ensemble de mon parcours, mes formations et mes expériences détaillées en téléchargeant mon CV au format PDF.</p>
+  </div>
+  <div style="display: flex; flex-direction: column; gap: 1rem;">
+    <a href="CV_Enzo_WISSOCQ_Alternance copie.pdf" class="cv-btn reveal" download>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Télécharger mon CV
+    </a>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2026 Enzo Wissocq &mdash; BUT GEA Parcours CG2P</p>
+  <div class="footer-links">
+    <a href="mailto:enzowissocq@gmail.com">Email</a>
+    <a href="https://fr.linkedin.com/in/enzo-wissocq?trk=people-guest_people_search-card" target="_blank">LinkedIn</a>
+  </div>
+</footer>
+
+<div class="modal-overlay" id="modal-overlay" onclick="closeOnOverlay(event)">
+  <div class="modal" id="modal-box">
+
+    <div id="p1" class="modal-content" style="display:none">
+      <div class="modal-header">
+        <p class="modal-num">Projet 01 — Stage de 2ème Année</p>
+        <h2 class="modal-title">Étude de rentabilité —<br>Activité de mise à disposition</h2>
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap"><span class="tag">Contrôle de Gestion</span><span class="tag">Comptabilité Analytique</span><span class="tag">Excel</span></div>
+        <button class="modal-close" onclick="closeModal()">&#10005;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <p class="modal-section-label">Période &amp; contexte</p>
+          <div class="modal-meta">
+            <div class="modal-meta-item"><span class="meta-label">Structure</span><span class="meta-value">Asso WIMOOV Paris</span></div>
+            <div class="modal-meta-item"><span class="meta-label">Durée</span><span class="meta-value">10 semaines (2025)</span></div>
+            <div class="modal-meta-item"><span class="meta-label">Service</span><span class="meta-value">Direction Administrative &amp; Financière</span></div>
+          </div>
+        </div>
+        <div class="modal-section">
+          <p class="modal-section-label">Description &amp; Missions</p>
+          <p>Dans le cadre de l'engagement de WIMOOV d'électrifier entièrement sa flotte de voitures d'ici 2030 (entraînant un doublement des charges), j'ai été chargé d'évaluer la rentabilité de l'activité de mise à disposition (MAD) de véhicules au niveau national. Travaillant de manière autonome sous la responsabilité du DAF, j'ai mis en place une méthodologie rigoureuse :</p>
+          <br>
+          <ul>
+            <li><strong>Extraction analytique :</strong> Isolation des charges (locations, entretien, assurances, amortissements) et produits spécifiques à la MAD au sein d'une comptabilité initialement structurée par projets régionaux.</li>
+            <li><strong>Traitement de la donnée :</strong> Tri et retraitement de milliers de lignes de grands livres comptables croisés avec le Suivi National des Véhicules.</li>
+            <li><strong>Modélisation Excel :</strong> Automatisation de matrices de synthèse régionales via des formules complexes (<code>SOMME.SI.ENS</code>) compilées par codes d'action et numéros de comptes.</li>
+            <li><strong>Retraitements analytiques :</strong> Modélisation de clés de répartition avec mon tuteur pour l'affectation des charges de personnel (prorata des prestations) et des quotes-parts de subventions (hauteur de 30%).</li>
+          </ul>
+        </div>
+        <div class="modal-section">
+          <p class="modal-section-label">Résultats obtenus</p>
+          <div class="modal-results">
+            <div class="result-card"><strong>-59 735 €</strong><span>Déficit global MAD (recouvrement 89%)</span></div>
+            <div class="result-card"><strong>97 %</strong><span>Taux recouvrement spécifique Voitures</span></div>
+            <div class="result-card"><strong>KPIs</strong><span>Calcul du Seuil de Rentabilité &amp; Point Mort</span></div>
+          </div>
+        </div>
+        <div class="modal-section">
+          <p class="modal-section-label">Difficultés rencontrées &amp; Apprentissages</p>
+          <p><strong>Complexité technique :</strong> L'absence de codes analytiques ou de numéros de comptes dédiés à l'activité MAD (hors recettes) rendait la donnée opaque. J'ai formulé des recommandations concrètes à la gouvernance pour pérenniser l'outil : création de codes analytiques nationaux harmonisés, comptes dédiés et intégration explicite de la mention "MAD" dans les conventions de subvention pour fiabiliser les futures clés de répartition.</p>
+        </div>
+        <div class="modal-section">
+          <p class="modal-section-label">Compétences mobilisées</p>
+          <div class="modal-skills">
+            <span class="skill-pill">Excel avancé</span><span class="skill-pill">Comptabilité de gestion</span><span class="skill-pill">Audit de grands livres</span><span class="skill-pill">Clefs de répartition</span><span class="skill-pill">Force de proposition</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="p2" class="modal-content" style="display:none">
+      <div class="modal-header">
+        <p class="modal-num">Projet 02 — Projet Tuteuré</p>
+        <h2 class="modal-title">Management de projet —<br>Oralité et coordination d'équipe</h2>
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap"><span class="tag">Gestion de Projet</span><span class="tag">Communication</span><span class="tag">SAÉ</span></div>
+        <button class="modal-close" onclick="closeModal()">&#10005;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <p class="modal-section-label">Période &amp; contexte</p>
+          <div class="modal-meta">
+            <div class="modal-meta-item"><span class="meta-label">Cadre</span><span class="meta-value">SAÉ 2ème année BUT</span></div>
+            <div class="modal-meta-item"><span class="meta-label">Durée</span><span class="meta-value">Année universitaire complète</span></div>
+            <div class="modal-meta-item"><span class="meta-label">Organisation</span><span class="meta-value">Équipe de 8 étudiants</span></div>
+          </div>
+        </div>
+        <div class="modal-section">
+          <p class="modal-section-label">Description &amp; Missions</p>
+          <p>Intitulé "Projet Théâtre", ce travail collectif consistait à concevoir, planifier et réaliser des ateliers pratiques d'improvisation théâtrale à destination des étudiants de BUT 1ère année afin de renforcer leur éloquence et leur posture en vue des soutenances. En parallèle, le projet incluait l'organisation logistique de sorties culturelles en lien direct avec la mission Art et Culture de l'IUT.</p>
+          <p>J'ai assumé la <strong>responsabilité de la communication interne et de la coordination des parties prenantes</strong> :</p>
+          <br>
+          <ul>
+            <li><strong>Flux d'information :</strong> Centralisation et arbitrage des données entre les 8 membres de l'équipe, le corps professoral et les intervenants externes.</li>
+            <li><strong>Correspondance officielle :</strong> Rédaction des conventions administratives et échanges institutionnels pour planifier les interventions professionnelles et sécuriser le programme des ateliers.</li>
+            <li><strong>Suivi logistique :</strong> Contrôle du rétroplanning et organisation des flux pour l'acheminement d'une vingtaine d'étudiants lors des sorties culturelles.</li>
+          </ul>
+        </div>
+        <div class="modal-section">
+          <p class="modal-section-label">Résultats obtenus</p>
+          <div class="modal-results">
+            <div class="result-card"><strong>13/20</strong><span>Note globale du projet</span></div>
+            <div class="result-card"><strong>10 pages</strong><span>Rapport d'analyse de gestion</span></div>
+            <div class="result-card"><strong>Soutenance</strong><span>Présentation devant 50 personnes</span></div>
+          </div>
+        </div>
+        <div class="modal-section">
+          <p class="modal-section-label">Difficultés rencontrées &amp; Apprentissages</p>
+          <p><strong>Pilotage des risques :</strong> La taille critique du groupe (8 personnes) présentait un risque majeur d'inertie organisationnelle et de dispersion de l'information. J'ai pallié cela en instaurant un suivi rigoureux des tâches par livrables et en formalisant des canaux de relances systématiques par mail, développant ainsi mes compétences en management d'équipe et en gestion des imprévus logistiques.</p>
+        </div>
+        <div class="modal-section">
+          <p class="modal-section-label">Compétences mobilisées</p>
+          <div class="modal-skills">
+            <span class="skill-pill">Rétroplanning</span><span class="skill-pill">Communication institutionnelle</span><span class="skill-pill">Gestion d'équipe</span><span class="skill-pill">Régulation des flux</span><span class="skill-pill">Aisance orale</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="p3" class="modal-content" style="display:none">
+      <div class="modal-header">
+        <p class="modal-num">Projet 03 — SAÉ 3ème Année</p>
+        <h2 class="modal-title">Conseil en gestion —<br>Diagnostic stratégique et pilotage Excel</h2>
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap"><span class="tag">Diagnostic Stratégique</span><span class="tag">Outil de Pilotage</span><span class="tag">Aide à la Décision</span></div>
+        <button class="modal-close" onclick="closeModal()">&#10005;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <p class="modal-section-label">Période &amp; contexte</p>
+          <div class="modal-meta">
+            <div class="modal-meta-item"><span class="meta-label">Entreprise</span><span class="meta-value">FRAULIS (Biscuiterie réelle)</span></div>
+            <div class="modal-meta-item"><span class="meta-label">Durée</span><span class="meta-value">Projet annuel S5 / S6</span></div>
+            <div class="modal-meta-item"><span class="meta-label">Nature</span><span class="meta-value">Mission d'analyse managériale</span></div>
+          </div>
+        </div>
+        <div class="modal-section">
+          <p class="modal-section-label">Description &amp; Missions</p>
+          <p>Cette mission de conseil d'envergure pour la biscuiterie artisanale industrielle FRAULIS (Seine-et-Marne) s'est articulée en deux jalons complémentaires :</p>
+          <br>
+          <ul>
+            <li><strong>Phase 1 (Semestre 5) — Diagnostic Stratégique :</strong> Déploiement des grilles d'audit de gestion (SWOT, PESTEL, Porter). Analyse de l'impact financier de la digitalisation des canaux de vente (e-commerce, marketplaces) sur la structure des charges (fixes et variables) pour accompagner et sécuriser les investissements matériels lourds menés par l'entreprise.</li>
+            <li><strong>Phase 2 (Semestre 6) — Conception Technique de l'Outil :</strong> Modélisation et développement complet sous Excel d'un outil de pilotage opérationnel et de gestion de flux automatisé destiné à structurer l'organisation interne (historiquement manuelle) de l'entreprise (suivi énergétique, freintes matières, logistique).</li>
+          </ul>
+        </div>
+        <div class="modal-section">
+          <p class="modal-section-label">Résultats obtenus</p>
+          <div class="modal-results">
+            <div class="result-card"><strong>15/20</strong><span>Note du diagnostic S5</span></div>
+            <div class="result-card"><strong>Rapport SAÉ 2</strong><span>Livrable d'audit écrit validé</span></div>
+            <div class="result-card"><strong>Livrable S6</strong><span>Outil Excel fonctionnel modélisé</span></div>
+          </div>
+        </div>
+        <div class="modal-section">
+          <p class="modal-section-label">Difficultés rencontrées &amp; Apprentissages</p>
+          <p><strong>Posture professionnelle :</strong> L'enjeu majeur consistait à adopter une posture d'analyste crédible pour restituer des arbitrages complexes (concilier volume de production industriel et contraintes RSE du circuit court/bio) lors d'une soutenance orale menée directement devant le dirigeant de l'entreprise et un jury académique, tout en traduisant ces besoins dans l'ergonomie fonctionnelle du tableur.</p>
+        </div>
+        <div class="modal-section">
+          <p class="modal-section-label">Compétences mobilisées</p>
+          <div class="modal-skills">
+            <span class="skill-pill">Analyse des coûts fixes/variables</span><span class="skill-pill">Audit stratégique</span><span class="skill-pill">Modélisation de processus</span><span class="skill-pill">Gestion des flux</span><span class="skill-pill">Présentation gouvernance</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function openModal(id) {
+    document.querySelectorAll('.modal-content').forEach(function(el) { el.style.display = 'none'; });
+    document.getElementById(id).style.display = 'block';
+    document.getElementById('modal-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    document.getElementById('modal-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closeOnOverlay(e) {
+    if (e.target === document.getElementById('modal-overlay')) closeModal();
+  }
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(function(el) { observer.observe(el); });
+</script>
+
+</body>
+</html>
